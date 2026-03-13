@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>💕 恋爱星球测试 | 你是哪种恋爱类型？</title>
+<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&family=Noto+Serif+SC:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pk:#FF6FA8;--pkl:#FFE8F0;--pkm:#FFAECE;
+  --pu:#9B5DE5;--pul:#F0E8FF;--pum:#C99EF0;
+  --rs:#E8406A;--pch:#FFB3C6;
+  --td:#2D1B33;--tm:#6B4174;--tl:#B28ABE;
+  --wh:#fff;
+  --rxl:24px;--rl:16px;--rm:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+
+body{
+  font-family:'Noto Serif SC',serif;
+  background:linear-gradient(160deg,#FFF0F8 0%,#F8EEFF 40%,#FFE8F5 75%,#FFF0FF 100%);
+  min-height:100vh;color:var(--td);overflow-x:hidden;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ctext y='20' font-size='18'%3E💕%3C/text%3E%3C/svg%3E") 12 12, auto;
+}
+
+/* ─── 樱花canvas ─── */
+#sakura-canvas{position:fixed;inset:0;pointer-events:none;z-index:0}
+
+/* ─── 星星背景 ─── */
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{
+  position:absolute;border-radius:50%;
+  background:radial-gradient(circle,#fff 0%,var(--pch) 60%,transparent 100%);
+  animation:twinkle ease-in-out infinite;
+}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.8)}50%{opacity:.9;transform:scale(1.2)}}
+
+/* ─── 浮动爱心 ─── */
+#hearts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fheart{position:absolute;font-size:14px;animation:floatHeart linear infinite;opacity:0}
+@keyframes floatHeart{
+  0%{transform:translateY(100vh) rotate(-20deg);opacity:0}
+  10%{opacity:.6}80%{opacity:.4}
+  100%{transform:translateY(-10vh) rotate(20deg);opacity:0}
+}
+
+.wrap{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:0 16px 60px}
+
+/* ═══════════ 封面 ═══════════ */
+#pg-cover{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;min-height:100vh;text-align:center;padding:40px 0;
+}
+
+/* 光晕大圆 */
+.hero-glow{
+  position:relative;width:160px;height:160px;margin-bottom:28px;
+}
+.hero-glow::before{
+  content:'';position:absolute;inset:-20px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,174,206,.5) 0%,rgba(201,158,240,.3) 50%,transparent 75%);
+  animation:glowPulse 3s ease-in-out infinite;
+}
+@keyframes glowPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.15);opacity:1}}
+.heart-ring{
+  width:160px;height:160px;
+  background:linear-gradient(135deg,#FFD6E8,#E8C8FF,#FFB3CF);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:68px;position:relative;z-index:1;
+  box-shadow:0 12px 40px rgba(233,64,106,.3),0 0 0 16px rgba(255,174,206,.15),0 0 0 32px rgba(255,174,206,.07);
+  animation:hb 2.8s ease-in-out infinite;
+}
+@keyframes hb{0%,100%{transform:scale(1) rotate(-2deg)}50%{transform:scale(1.07) rotate(2deg)}}
+
+/* 装饰小图标 */
+.cover-decos{position:relative;width:100%}
+.deco-float{
+  position:absolute;font-size:20px;animation:dfloat 4s ease-in-out infinite;
+}
+@keyframes dfloat{0%,100%{transform:translateY(0) rotate(-10deg)}50%{transform:translateY(-12px) rotate(10deg)}}
+
+.cover-ribbon{
+  background:linear-gradient(90deg,transparent,rgba(255,174,206,.3),transparent);
+  height:1px;width:200px;margin:0 auto 16px;
+}
+
+.badge{
+  background:linear-gradient(90deg,#FF85B3,#B87FE0);
+  color:#fff;font-size:11px;letter-spacing:2.5px;
+  padding:6px 20px;border-radius:20px;margin-bottom:14px;
+  font-family:'ZCOOL XiaoWei',serif;
+  box-shadow:0 4px 14px rgba(233,64,106,.25);
+  position:relative;overflow:hidden;
+}
+.badge::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);
+  transform:translateX(-100%);animation:shimmer 2.5s infinite;
+}
+@keyframes shimmer{100%{transform:translateX(100%)}}
+
+.cover-h1{
+  font-family:'Ma Shan Zheng',cursive;font-size:42px;line-height:1.25;
+  background:linear-gradient(135deg,#E8406A,#9B5DE5,#FF6FA8);
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  margin-bottom:10px;animation:gradMove 4s linear infinite;
+}
+@keyframes gradMove{0%{background-position:0% center}100%{background-position:200% center}}
+
+.cover-sub{
+  font-size:14px;color:var(--tm);line-height:1.9;
+  margin-bottom:24px;max-width:300px;
+}
+.cover-sub em{
+  color:var(--pk);font-style:normal;font-family:'ZCOOL XiaoWei',serif;
+}
+
+/* 统计pill */
+.stats{display:flex;gap:10px;margin-bottom:30px;flex-wrap:wrap;justify-content:center}
+.stat{
+  background:rgba(255,255,255,.85);backdrop-filter:blur(10px);
+  border-radius:20px;padding:8px 16px;font-size:12px;color:var(--tm);
+  box-shadow:0 2px 16px rgba(200,100,180,.14),0 0 0 1px rgba(255,174,206,.3);
+}
+.stat strong{color:var(--rs);font-size:15px;display:block}
+
+/* 特色标签 */
+.feature-pills{
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;
+}
+.fp{
+  background:rgba(255,255,255,.7);border:1px solid rgba(255,174,206,.5);
+  border-radius:20px;padding:5px 12px;font-size:12px;color:var(--tm);
+  font-family:'ZCOOL XiaoWei',serif;display:flex;align-items:center;gap:4px;
+}
+
+.btn-go{
+  background:linear-gradient(135deg,#FF6FA8,#C99EF0,#9B5DE5);
+  background-size:200% auto;
+  color:#fff;border:none;border-radius:50px;
+  padding:18px 60px;font-size:18px;
+  font-family:'ZCOOL XiaoWei',serif;cursor:pointer;letter-spacing:1.5px;
+  box-shadow:0 10px 30px rgba(233,64,106,.38);transition:all .3s;
+  animation:gradMove 4s linear infinite;position:relative;overflow:hidden;
+}
+.btn-go::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+  transform:translateX(-100%);transition:transform .6s;
+}
+.btn-go:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(233,64,106,.5)}
+.btn-go:hover::before{transform:translateX(100%)}
+.btn-go:active{transform:translateY(-1px)}
+
+.cover-note{margin-top:14px;font-size:12px;color:var(--tl);line-height:1.9}
+
+/* 底部装饰花边 */
+.petal-row{
+  display:flex;gap:6px;justify-content:center;margin-top:20px;
+  font-size:14px;opacity:.5;
+}
+
+/* ═══════════ 测试页 ═══════════ */
+#pg-quiz{display:none;padding-top:20px}
+
+.qhdr{
+  background:rgba(255,255,255,.9);backdrop-filter:blur(12px);
+  border-radius:var(--rxl);padding:18px 20px;margin-bottom:18px;
+  box-shadow:0 4px 20px rgba(200,100,180,.1),0 0 0 1px rgba(255,174,206,.2);
+}
+.qi{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ql{font-size:12px;color:var(--tl);font-family:'ZCOOL XiaoWei',serif}
+.qn{font-size:13px;color:var(--tm);font-weight:600}
+.pb{height:7px;background:var(--pkl);border-radius:4px;overflow:hidden;position:relative}
+.pf{
+  height:100%;border-radius:4px;
+  background:linear-gradient(90deg,#FF85B3,#C99EF0,#9B5DE5);
+  background-size:200% auto;animation:gradMove 3s linear infinite;
+  transition:width .55s cubic-bezier(.34,1.56,.64,1);
+  box-shadow:0 0 8px rgba(233,64,106,.4);
+}
+
+/* 进度小宝石 */
+.qdots{display:flex;gap:5px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+.qdot{
+  width:8px;height:8px;border-radius:50%;background:var(--pkl);
+  transition:all .3s;flex-shrink:0;
+}
+.qdot.done{background:linear-gradient(135deg,var(--pk),var(--pu));box-shadow:0 0 5px rgba(233,64,106,.4)}
+.qdot.cur{background:linear-gradient(135deg,#FFB3CF,var(--pk));transform:scale(1.3);box-shadow:0 0 8px rgba(233,64,106,.5)}
+
+.qcard{
+  background:rgba(255,255,255,.92);backdrop-filter:blur(12px);
+  border-radius:var(--rxl);padding:28px 22px;margin-bottom:18px;
+  box-shadow:0 6px 24px rgba(200,100,180,.1),0 0 0 1px rgba(255,174,206,.2);
+  animation:cardIn .4s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.q-scenario{
+  background:linear-gradient(135deg,var(--pkl),var(--pul));
+  border-radius:var(--rm);padding:10px 14px;margin-bottom:16px;
+  font-size:12px;color:var(--tm);font-family:'ZCOOL XiaoWei',serif;
+  border-left:3px solid var(--pk);
+}
+.qemoji{font-size:38px;margin-bottom:12px;display:block}
+.qtxt{font-size:16px;line-height:1.8;color:var(--td);margin-bottom:20px;font-family:'ZCOOL XiaoWei',serif}
+
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{
+  background:rgba(255,232,240,.5);border:1.5px solid rgba(255,174,206,.3);
+  border-radius:var(--rl);padding:14px 16px;cursor:pointer;
+  text-align:left;font-size:14px;color:var(--td);line-height:1.6;
+  transition:all .2s cubic-bezier(.34,1.56,.64,1);
+  position:relative;overflow:hidden;font-family:'Noto Serif SC',serif;
+}
+.opt::before{
+  content:'';position:absolute;left:0;top:0;width:4px;height:100%;
+  background:linear-gradient(180deg,var(--pk),var(--pu));
+  opacity:0;transition:opacity .2s;border-radius:2px 0 0 2px;
+}
+.opt::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,174,206,.1),rgba(201,158,240,.1));
+  opacity:0;transition:opacity .2s;
+}
+.opt:hover{border-color:var(--pkm);background:rgba(255,255,255,.9);transform:translateX(5px) scale(1.01)}
+.opt:hover::before,.opt:hover::after,.opt.sel::before,.opt.sel::after{opacity:1}
+.opt.sel{
+  border-color:var(--pk);border-width:2px;
+  background:linear-gradient(135deg,rgba(255,240,247,.9),rgba(245,232,255,.9));
+  color:var(--rs);transform:translateX(5px);
+}
+.oltr{
+  display:inline-flex;width:24px;height:24px;background:#fff;border-radius:50%;
+  align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  color:var(--pu);margin-right:10px;border:1.5px solid var(--pum);
+  vertical-align:middle;flex-shrink:0;transition:all .2s;
+}
+.opt.sel .oltr{
+  background:linear-gradient(135deg,var(--pk),var(--pu));
+  color:#fff;border-color:transparent;
+  box-shadow:0 2px 8px rgba(233,64,106,.3);
+}
+
+/* 选中后的粒子效果label */
+.opt.sel .opt-check{display:inline}
+.opt-check{display:none;position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:16px}
+
+.navr{display:flex;gap:12px;align-items:center}
+.btn-prev{
+  background:rgba(255,255,255,.8);border:1.5px solid var(--pkm);color:var(--tm);
+  border-radius:50px;padding:13px 22px;font-size:14px;cursor:pointer;
+  transition:all .2s;font-family:'ZCOOL XiaoWei',serif;flex-shrink:0;
+  backdrop-filter:blur(8px);
+}
+.btn-prev:hover{background:var(--pkl);transform:translateX(-2px)}
+.btn-next{
+  flex:1;background:linear-gradient(135deg,var(--pk),var(--pu));
+  background-size:200% auto;
+  color:#fff;border:none;border-radius:50px;padding:14px;font-size:15px;
+  cursor:pointer;transition:all .25s;font-family:'ZCOOL XiaoWei',serif;
+  box-shadow:0 5px 18px rgba(233,64,106,.3);opacity:.45;pointer-events:none;
+}
+.btn-next.on{opacity:1;pointer-events:all;animation:gradMove 4s linear infinite}
+.btn-next.on:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(233,64,106,.45)}
+
+/* ═══════════ 结果页 ═══════════ */
+#pg-result{display:none;padding-top:16px}
+
+/* 顶部彩带 */
+.confetti-bar{
+  height:4px;width:100%;border-radius:2px;
+  background:linear-gradient(90deg,#FF6FA8,#C99EF0,#9B5DE5,#FF85B3,#FFB3C6);
+  background-size:300% auto;animation:gradMove 2s linear infinite;
+  margin-bottom:16px;box-shadow:0 2px 8px rgba(233,64,106,.3);
+}
+
+/* 英雄区 */
+.res-hero{
+  background:rgba(255,255,255,.92);backdrop-filter:blur(16px);
+  border-radius:var(--rxl);padding:32px 22px 26px;margin-bottom:16px;
+  text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(200,100,180,.15),0 0 0 1px rgba(255,174,206,.25);
+}
+.res-hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 80% 20%,rgba(255,174,206,.2) 0%,transparent 50%),
+             radial-gradient(ellipse at 20% 80%,rgba(201,158,240,.18) 0%,transparent 50%);
+}
+.res-stars-deco{position:absolute;inset:0;pointer-events:none}
+.rsstar{position:absolute;font-size:12px;opacity:.4;animation:twinkle ease-in-out infinite}
+
+.res-icon-wrap{position:relative;display:inline-block;margin-bottom:18px}
+.res-icon{
+  width:100px;height:100px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:48px;
+  box-shadow:0 10px 32px rgba(233,64,106,.22);position:relative;z-index:1;
+}
+.res-icon-ring{
+  position:absolute;inset:-8px;border-radius:50%;
+  border:2px dashed rgba(255,174,206,.6);
+  animation:spin 12s linear infinite;
+}
+.res-icon-ring2{
+  position:absolute;inset:-16px;border-radius:50%;
+  border:1px dashed rgba(201,158,240,.4);
+  animation:spin 20s linear infinite reverse;
+}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+.res-lbl{font-size:11px;letter-spacing:3.5px;color:var(--tl);margin-bottom:8px;font-family:'ZCOOL XiaoWei',serif}
+.res-name{
+  font-family:'Ma Shan Zheng',cursive;font-size:34px;margin-bottom:10px;
+  background:linear-gradient(135deg,var(--rs),var(--pu),var(--pk));
+  background-size:200% auto;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  animation:gradMove 3s linear infinite;
+  position:relative;z-index:1;
+}
+.res-quote{
+  font-size:13px;color:var(--tm);line-height:1.85;font-style:italic;
+  margin-bottom:20px;padding:10px 14px;position:relative;z-index:1;
+  background:rgba(255,232,240,.5);border-radius:var(--rm);
+  border-left:3px solid var(--pk);text-align:left;
+}
+.tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.tag{
+  padding:6px 14px;border-radius:20px;font-size:12px;font-family:'ZCOOL XiaoWei',serif;
+  box-shadow:0 2px 8px rgba(200,100,180,.15);
+}
+
+/* 通用卡片 */
+.card{
+  background:rgba(255,255,255,.88);backdrop-filter:blur(12px);
+  border-radius:var(--rxl);padding:24px 20px;margin-bottom:16px;
+  box-shadow:0 5px 20px rgba(200,100,180,.09),0 0 0 1px rgba(255,174,206,.18);
+}
+.card-title{
+  display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;
+  color:var(--tm);margin-bottom:18px;font-family:'ZCOOL XiaoWei',serif;
+}
+.card-title .ico{font-size:18px}
+
+/* ─── 六边形雷达 ─── */
+.hex-wrap{
+  background:linear-gradient(135deg,rgba(255,248,252,.95),rgba(248,240,255,.95));
+  backdrop-filter:blur(12px);
+  border-radius:var(--rxl);padding:24px 16px 22px;margin-bottom:16px;
+  box-shadow:0 5px 20px rgba(200,100,180,.1),0 0 0 1px rgba(255,174,206,.2);
+  text-align:center;
+}
+.hex-title{
+  font-size:15px;font-weight:600;color:var(--tm);font-family:'ZCOOL XiaoWei',serif;
+  margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:8px;
+}
+#hexChart{display:block;margin:0 auto}
+.hex-legend{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px 14px;
+  margin-top:20px;max-width:320px;margin-left:auto;margin-right:auto;
+}
+.hex-item{
+  display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tm);
+  font-family:'ZCOOL XiaoWei',serif;
+}
+.hex-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;box-shadow:0 0 4px rgba(233,64,106,.3)}
+.hex-val{
+  font-size:12px;font-weight:700;margin-left:auto;
+  background:linear-gradient(135deg,var(--pk),var(--pu));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+}
+
+/* 基础解析 */
+.desc-body{font-size:14px;color:var(--td);line-height:2.1}
+
+/* ─── 深度报告区 ─── */
+.report-wrap{
+  background:linear-gradient(135deg,rgba(255,240,248,.95),rgba(245,235,255,.95));
+  backdrop-filter:blur(12px);
+  border:1.5px solid rgba(255,174,206,.4);
+  border-radius:var(--rxl);padding:24px 20px;margin-bottom:16px;
+  box-shadow:0 6px 24px rgba(233,64,106,.1);
+  position:relative;overflow:hidden;
+}
+.report-wrap::before{
+  content:'';position:absolute;top:-40px;right:-40px;width:140px;height:140px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,174,206,.3),transparent 70%);
+}
+.report-wrap::after{
+  content:'';position:absolute;bottom:-30px;left:-30px;width:100px;height:100px;
+  border-radius:50%;background:radial-gradient(circle,rgba(201,158,240,.25),transparent 70%);
+}
+.report-header{
+  display:flex;align-items:center;gap:10px;margin-bottom:20px;position:relative;z-index:1;
+}
+.report-badge{
+  background:linear-gradient(90deg,var(--pk),var(--pu));
+  color:#fff;font-size:11px;padding:4px 12px;border-radius:14px;
+  font-family:'ZCOOL XiaoWei',serif;letter-spacing:1px;flex-shrink:0;
+  box-shadow:0 3px 10px rgba(233,64,106,.3);
+}
+.report-title-txt{font-size:15px;font-weight:600;color:var(--tm);font-family:'ZCOOL XiaoWei',serif}
+
+/* 加载动画 */
+.loading-box{text-align:center;padding:36px 0;position:relative;z-index:1}
+.loading-hearts{display:flex;gap:6px;justify-content:center;margin-bottom:14px}
+.lheart{font-size:20px;animation:lhb 1.2s ease-in-out infinite}
+.lheart:nth-child(2){animation-delay:.2s}
+.lheart:nth-child(3){animation-delay:.4s}
+@keyframes lhb{0%,100%{transform:scale(.8);opacity:.4}50%{transform:scale(1.2);opacity:1}}
+.loading-txt{font-size:13px;color:var(--tm);font-family:'ZCOOL XiaoWei',serif;line-height:1.8}
+.loading-sub{font-size:11px;color:var(--tl);margin-top:6px}
+
+/* 报告内容 */
+.report-content{font-size:14px;color:var(--td);line-height:2.1;position:relative;z-index:1}
+.report-section{margin-bottom:22px}
+.report-section:last-child{margin-bottom:0}
+.rsec-title{
+  font-family:'ZCOOL XiaoWei',serif;font-size:15px;color:var(--tm);
+  font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;
+  padding-bottom:8px;border-bottom:1px dashed rgba(255,174,206,.5);
+}
+.rsec-body{font-size:14px;color:var(--td);line-height:2.1}
+.rsec-body .tip-item{
+  display:flex;align-items:flex-start;gap:8px;margin-bottom:10px;
+  background:rgba(255,232,240,.4);border-radius:var(--rm);padding:10px 12px;
+}
+.tip-star{font-size:14px;flex-shrink:0;margin-top:1px}
+
+/* 隐藏弱点板块 */
+.weakness-card{
+  background:linear-gradient(135deg,#2D1B33,#1E0A26);
+  border-radius:var(--rxl);padding:24px 20px;margin-bottom:16px;
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 28px rgba(45,27,51,.4);
+}
+.weakness-card::before{
+  content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;
+  border-radius:50%;background:radial-gradient(circle,rgba(255,111,168,.18),transparent 70%);
+}
+.weakness-card::after{
+  content:'';position:absolute;bottom:-30px;left:-30px;width:120px;height:120px;
+  border-radius:50%;background:radial-gradient(circle,rgba(155,93,229,.15),transparent 70%);
+}
+.wk-title{
+  display:flex;align-items:center;gap:9px;font-size:15px;font-weight:600;
+  color:#FFD6E8;margin-bottom:14px;font-family:'ZCOOL XiaoWei',serif;
+  position:relative;z-index:1;
+}
+.wk-body{
+  font-size:14px;color:#F0C8D8;line-height:2.1;
+  position:relative;z-index:1;white-space:pre-line;
+}
+
+/* 最佳伴侣 */
+.match-item{
+  display:flex;align-items:center;gap:14px;padding:14px;
+  border-radius:var(--rl);background:linear-gradient(135deg,rgba(255,232,240,.6),rgba(240,232,255,.5));
+  margin-bottom:10px;border:1px solid rgba(255,174,206,.25);
+  transition:transform .2s;
+}
+.match-item:hover{transform:translateX(3px)}
+.match-item:last-child{margin-bottom:0}
+.match-icon{font-size:28px;flex-shrink:0}
+.match-name{font-size:14px;font-weight:600;color:var(--td);font-family:'ZCOOL XiaoWei',serif}
+.match-desc{font-size:12px;color:var(--tm);margin-top:3px;line-height:1.6}
+
+/* 报告页底部装饰引用 */
+.love-quote{
+  background:linear-gradient(135deg,rgba(255,232,240,.5),rgba(240,232,255,.5));
+  border-radius:var(--rl);padding:16px 18px;margin-bottom:16px;text-align:center;
+  border:1px dashed rgba(255,174,206,.4);
+}
+.lq-text{font-size:13px;color:var(--tm);line-height:1.9;font-style:italic}
+.lq-from{font-size:11px;color:var(--tl);margin-top:6px;font-family:'ZCOOL XiaoWei',serif}
+
+/* 底部按钮 */
+.btn-share{
+  width:100%;
+  background:linear-gradient(135deg,#FF6FA8,#C99EF0,#9B5DE5);
+  background-size:200% auto;animation:gradMove 4s linear infinite;
+  color:#fff;border:none;border-radius:50px;padding:17px;font-size:16px;
+  cursor:pointer;font-family:'ZCOOL XiaoWei',serif;letter-spacing:1px;
+  box-shadow:0 8px 24px rgba(233,64,106,.38);transition:all .25s;margin-bottom:12px;
+}
+.btn-share:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(233,64,106,.5)}
+.btn-retry{
+  width:100%;background:rgba(255,255,255,.8);border:1.5px solid var(--pkm);
+  color:var(--tm);border-radius:50px;padding:14px;font-size:15px;cursor:pointer;
+  font-family:'ZCOOL XiaoWei',serif;transition:all .2s;margin-bottom:10px;
+  backdrop-filter:blur(8px);
+}
+.btn-retry:hover{background:var(--pkl)}
+
+/* 限制提示 */
+.limit-box{
+  background:linear-gradient(135deg,rgba(255,240,248,.9),rgba(245,235,255,.9));
+  border:1.5px dashed var(--pkm);border-radius:var(--rxl);
+  padding:32px 22px;text-align:center;margin-bottom:16px;
+}
+.limit-icon{font-size:48px;margin-bottom:14px;display:block}
+.limit-h{font-family:'ZCOOL XiaoWei',serif;font-size:18px;color:var(--td);margin-bottom:8px}
+.limit-sub{font-size:13px;color:var(--tm);line-height:1.85}
+
+.err-box{
+  background:rgba(255,240,240,.8);border:1px solid rgba(255,180,180,.5);
+  border-radius:var(--rm);padding:14px;font-size:13px;color:#C04040;
+  text-align:center;font-family:'ZCOOL XiaoWei',serif;
+}
+
+.watermark{
+  text-align:center;font-size:11px;color:var(--tl);padding-bottom:10px;
+  font-family:'ZCOOL XiaoWei',serif;line-height:2;
+}
+
+/* Toast */
+.toast{
+  position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(16px);
+  background:rgba(45,27,51,.92);backdrop-filter:blur(10px);
+  color:#fff;padding:12px 26px;border-radius:30px;
+  font-size:13px;opacity:0;transition:all .35s cubic-bezier(.34,1.56,.64,1);
+  z-index:9999;pointer-events:none;white-space:nowrap;
+  font-family:'ZCOOL XiaoWei',serif;
+  box-shadow:0 6px 20px rgba(45,27,51,.3);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* 返回顶部时的过渡 */
+.page-fade{animation:pageFadeIn .5s ease}
+@keyframes pageFadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:380px){
+  .cover-h1{font-size:36px}
+  .res-name{font-size:28px}
+  .btn-go{padding:16px 44px;font-size:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- 樱花canvas -->
+<canvas id="sakura-canvas"></canvas>
+<!-- 星星 -->
+<div id="stars"></div>
+<!-- 浮动爱心 -->
+<div id="hearts"></div>
+
+<div class="wrap">
+
+<!-- ═══════════ 封面 ═══════════ -->
+<div id="pg-cover">
+  <div class="hero-glow">
+    <div class="heart-ring">🌸</div>
+  </div>
+  <div class="badge">✨ 恋爱星球深度测试 · 限时免费 ✨</div>
+  <h1 class="cover-h1">你是哪种<br>恋爱星球女孩？</h1>
+  <p class="cover-sub">
+    10道题 × 六维雷达分析 × <em>深度测试报告</em><br>
+    揭开你在爱情里最真实的模样 🌙
+  </p>
+  <div class="stats">
+    <div class="stat"><strong>28.6w</strong>人已测</div>
+    <div class="stat"><strong>4.9 ⭐</strong>好评</div>
+    <div class="stat"><strong>6维</strong>雷达图</div>
+    <div class="stat"><strong>深度</strong>报告</div>
+  </div>
+  <div class="feature-pills">
+    <div class="fp">🌸 樱花飘落特效</div>
+    <div class="fp">🔮 六边形雷达图</div>
+    <div class="fp">💌 恋爱弱点解析</div>
+    <div class="fp">🌹 专属运势预言</div>
+  </div>
+  <button class="btn-go" onclick="goQuiz()">🌙 开始测试（免费）</button>
+  <p class="cover-note">约3分钟 · 凭直觉作答效果最佳<br>每个设备免费使用 <strong style="color:var(--pk)">2次</strong></p>
+  <div class="petal-row">🌸 ✨ 💕 ✨ 🌸 ✨ 💕 ✨ 🌸</div>
+</div>
+
+<!-- ═══════════ 测试页 ═══════════ -->
+<div id="pg-quiz">
+  <div class="qhdr">
+    <div class="qi">
+      <span class="ql">🌸 恋爱星球测试</span>
+      <span class="qn" id="qNum">第 1 题 / 共 10 题</span>
+    </div>
+    <div class="pb"><div class="pf" id="pFill" style="width:10%"></div></div>
+    <div class="qdots" id="qDots"></div>
+  </div>
+  <div class="qcard" id="qCard">
+    <div class="q-scenario" id="qScenario" style="display:none"></div>
+    <span class="qemoji" id="qEmoji"></span>
+    <p class="qtxt" id="qTxt"></p>
+    <div class="opts" id="qOpts"></div>
+  </div>
+  <div class="navr">
+    <button class="btn-prev" id="btnPrev" onclick="prevQ()">← 上一题</button>
+    <button class="btn-next" id="btnNext" onclick="nextQ()">继续 →</button>
+  </div>
+</div>
+
+<!-- ═══════════ 结果页 ═══════════ -->
+<div id="pg-result">
+  <div class="confetti-bar"></div>
+
+  <!-- 英雄 -->
+  <div class="res-hero">
+    <div class="res-hero-bg"></div>
+    <div class="res-stars-deco" id="resStars"></div>
+    <div class="res-icon-wrap">
+      <div class="res-icon-ring"></div>
+      <div class="res-icon-ring2"></div>
+      <div class="res-icon" id="rIcon"></div>
+    </div>
+    <div class="res-lbl">✨ 你的恋爱星球类型 ✨</div>
+    <div class="res-name" id="rName"></div>
+    <div class="res-quote" id="rQuote"></div>
+    <div class="tags" id="rTags"></div>
+  </div>
+
+  <!-- 六边形雷达 -->
+  <div class="hex-wrap">
+    <div class="hex-title"><span>🔮</span>你的恋爱六维雷达<span>🔮</span></div>
+    <svg id="hexChart" width="260" height="260" viewBox="0 0 260 260"></svg>
+    <div class="hex-legend" id="hexLegend"></div>
+  </div>
+
+  <!-- 基础解析 -->
+  <div class="card">
+    <div class="card-title"><span class="ico">🌸</span>性格基础解析</div>
+    <div class="desc-body" id="rDesc"></div>
+  </div>
+
+  <!-- 深度报告（IP限制，免费） -->
+  <div class="report-wrap" id="reportWrap">
+    <div class="report-header">
+      <span class="report-badge">深度报告</span>
+      <span class="report-title-txt">你的专属恋爱深度测试报告</span>
+    </div>
+    <div id="reportContent">
+      <div class="loading-box">
+        <div class="loading-hearts">
+          <span class="lheart">💕</span>
+          <span class="lheart">🌸</span>
+          <span class="lheart">✨</span>
+        </div>
+        <div class="loading-txt">正在为你生成专属深度报告...</div>
+        <div class="loading-sub">分析你的六维恋爱数据，请稍候约10秒</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 隐藏弱点（深色卡片） -->
+  <div class="weakness-card" id="weakCard" style="display:none">
+    <div class="wk-title"><span>⚡</span>你在恋爱里的隐藏弱点</div>
+    <div class="wk-body" id="weakBody"></div>
+  </div>
+
+  <!-- 最佳伴侣 -->
+  <div class="card" id="matchCard">
+    <div class="card-title"><span class="ico">💝</span>最契合的伴侣类型</div>
+    <div id="matchList"></div>
+  </div>
+
+  <!-- 爱情名言装饰 -->
+  <div class="love-quote" id="loveQuote">
+    <div class="lq-text" id="lqText"></div>
+    <div class="lq-from" id="lqFrom"></div>
+  </div>
+
+  <button class="btn-share" onclick="doShare()">📸 截图分享到小红书 🌸</button>
+  <button class="btn-retry" onclick="doRetry()">🔄 再测一次</button>
+  <div class="watermark">
+    💕 恋爱星球测试 · 深度报告版<br>
+    每个设备免费使用2次 · 仅供娱乐参考
+  </div>
+</div>
+
+</div><!-- /wrap -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════
+   樱花飘落特效
+═══════════════════════════════════════ */
+(function(){
+  var canvas=document.getElementById('sakura-canvas');
+  var ctx=canvas.getContext('2d');
+  var petals=[];
+  var W,H;
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+
+  var colors=['#FFB3C6','#FFC8D6','#FFD6E0','#F4A8C0','#E8A0C0','#DDA0D0'];
+  function Petal(){
+    this.reset=function(){
+      this.x=Math.random()*W;
+      this.y=-20;
+      this.r=3+Math.random()*5;
+      this.color=colors[Math.floor(Math.random()*colors.length)];
+      this.speed=0.8+Math.random()*1.8;
+      this.wind=Math.sin(Math.random()*Math.PI*2)*0.8;
+      this.rot=Math.random()*Math.PI*2;
+      this.rotSpeed=(Math.random()-.5)*.06;
+      this.wobble=Math.random()*Math.PI*2;
+      this.wobbleSpeed=0.03+Math.random()*0.04;
+      this.opacity=0.4+Math.random()*0.5;
+    };
+    this.reset();
+    this.y=Math.random()*H; // 初始分布全屏
+    this.update=function(){
+      this.wobble+=this.wobbleSpeed;
+      this.x+=this.wind+Math.sin(this.wobble)*0.8;
+      this.y+=this.speed;
+      this.rot+=this.rotSpeed;
+      if(this.y>H+20) this.reset();
+    };
+    this.draw=function(){
+      ctx.save();
+      ctx.globalAlpha=this.opacity;
+      ctx.translate(this.x,this.y);
+      ctx.rotate(this.rot);
+      ctx.fillStyle=this.color;
+      // 画花瓣形状
+      ctx.beginPath();
+      ctx.ellipse(0,0,this.r*1.4,this.r*.8,0,0,Math.PI*2);
+      ctx.fill();
+      ctx.restore();
+    };
+  }
+
+  for(var i=0;i<28;i++) petals.push(new Petal());
+
+  function animate(){
+    ctx.clearRect(0,0,W,H);
+    petals.forEach(function(p){p.update();p.draw()});
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+/* 星星 */
+(function(){
+  var el=document.getElementById('stars');
+  for(var i=0;i<55;i++){
+    var s=document.createElement('div'); s.className='star';
+    var sz=1.5+Math.random()*3;
+    s.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;'
+      +'animation-duration:'+(2+Math.random()*4)+'s;animation-delay:'+(Math.random()*5)+'s;';
+    el.appendChild(s);
+  }
+})();
+
+/* 浮动爱心 */
+(function(){
+  var el=document.getElementById('hearts');
+  var emojis=['💕','💗','💖','🌸','✨','🌙','⭐','💫'];
+  for(var i=0;i<10;i++){
+    var h=document.createElement('span'); h.className='fheart';
+    h.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    h.style.cssText='left:'+Math.random()*100+'%;animation-duration:'+(12+Math.random()*16)+'s;'
+      +'animation-delay:'+(Math.random()*20)+'s;font-size:'+(10+Math.random()*12)+'px;';
+    el.appendChild(h);
+  }
+})();
+
+/* ═══════════════════════════════════════
+   题目数据（10题，6维）
+═══════════════════════════════════════ */
+var Qs=[
+  {
+    e:'🌸',scenario:'你暗恋了一个人三个月……',
+    t:'你会怎么做？',
+    o:['主动出击！喜欢就去追，爱而不得太遗憾',
+       '默默关注，等对方先对我表示好感',
+       '制造巧合，慢慢让缘分来推进',
+       '写在日记里，珍藏这段心动就好'],
+    s:[{pa:4,se:0,in:2,si:1,lo:1,ro:2},{pa:1,se:3,in:0,si:2,lo:3,ro:1},{pa:2,se:1,in:1,si:2,lo:2,ro:3},{pa:0,se:1,in:3,si:4,lo:2,ro:2}]
+  },
+  {
+    e:'💬',scenario:'对方三小时没回消息……',
+    t:'你的第一反应是？',
+    o:['他在忙吧，继续做我自己的事',
+       '有点担心，翻翻朋友圈确认他有没有在线',
+       '发第二条消息试探一下，不放心',
+       '开始胡思乱想……是不是对我没感觉了？'],
+    s:[{pa:1,se:3,in:3,si:0,lo:2,ro:1},{pa:1,se:1,in:2,si:2,lo:2,ro:1},{pa:2,se:0,in:1,si:3,lo:3,ro:1},{pa:0,se:0,in:0,si:4,lo:2,ro:1}]
+  },
+  {
+    e:'🎁',scenario:'回想你们的甜蜜时刻……',
+    t:'你最享受哪种瞬间？',
+    o:['两人并肩散步，什么都不说也很舒适',
+       '对方记得我随口提过的细节，给了我惊喜',
+       '争吵过后和好，感觉比以前更亲密了',
+       '聊到天亮，两人分享彼此从不说的秘密'],
+    s:[{pa:1,se:3,in:2,si:1,lo:3,ro:2},{pa:2,se:2,in:0,si:3,lo:2,ro:4},{pa:3,se:0,in:1,si:2,lo:2,ro:1},{pa:1,se:1,in:1,si:4,lo:2,ro:3}]
+  },
+  {
+    e:'🌙',scenario:'如果可以选择……',
+    t:'你最理想的爱情状态是？',
+    o:['热烈的，宁可燃烧殆尽也不要温吞如水',
+       '安稳的，像家人一样彼此依靠到老',
+       '既亲密又保留各自空间，相互成就',
+       '充满心动感，永远新鲜，永远悸动'],
+    s:[{pa:4,se:0,in:1,si:2,lo:1,ro:3},{pa:1,se:4,in:0,si:1,lo:4,ro:2},{pa:1,se:1,in:4,si:1,lo:2,ro:2},{pa:2,se:0,in:1,si:4,lo:1,ro:4}]
+  },
+  {
+    e:'💔',scenario:'如果有一天分手了……',
+    t:'你通常会怎么度过低谷？',
+    o:['很快投入新生活，忙碌是最好的疗愈',
+       '需要很长时间走出来，会反复回想',
+       '和闺蜜倾诉，哭一场再慢慢恢复',
+       '把感情写成文字或创作，转化情绪'],
+    s:[{pa:2,se:1,in:3,si:0,lo:1,ro:1},{pa:0,se:0,in:0,si:4,lo:3,ro:1},{pa:1,se:2,in:1,si:2,lo:2,ro:1},{pa:1,se:0,in:2,si:3,lo:2,ro:3}]
+  },
+  {
+    e:'🌹',scenario:'对方和异性关系很好，频繁单独出去……',
+    t:'你会怎么处理？',
+    o:['说清楚我的感受，直接沟通边界',
+       '表面不说，内心其实有些不安',
+       '相信对方，反正我也有自己的生活圈',
+       '稍微留意一下，但总体还是信任他'],
+    s:[{pa:3,se:0,in:2,si:1,lo:2,ro:1},{pa:0,se:0,in:0,si:4,lo:3,ro:1},{pa:0,se:2,in:4,si:0,lo:1,ro:2},{pa:1,se:3,in:1,si:1,lo:3,ro:2}]
+  },
+  {
+    e:'✨',scenario:'周末约会，对方问你想怎么安排……',
+    t:'你更喜欢哪种方式？',
+    o:['对方提前策划好，有仪式感的惊喜最甜',
+       '两人随性而为，走到哪算哪最自在',
+       '一起讨论决定，共同期待更有参与感',
+       '找个安静的地方，只有彼此，不被打扰'],
+    s:[{pa:2,se:2,in:0,si:3,lo:2,ro:4},{pa:3,se:0,in:3,si:1,lo:1,ro:2},{pa:1,se:2,in:2,si:1,lo:2,ro:2},{pa:1,se:1,in:1,si:4,lo:2,ro:3}]
+  },
+  {
+    e:'💭',scenario:'在茫茫人海中……',
+    t:'你更容易被哪种人吸引？',
+    o:['充满热情、在人群中发光、有感染力的人',
+       '稳重可靠、情绪稳定、让人很有安全感的人',
+       '独立自主、有自己想法、不依附任何人的人',
+       '敏感细腻、能真正读懂你内心世界的人'],
+    s:[{pa:3,se:0,in:1,si:2,lo:1,ro:3},{pa:0,se:4,in:1,si:1,lo:3,ro:1},{pa:1,se:1,in:4,si:0,lo:2,ro:2},{pa:0,se:1,in:1,si:4,lo:2,ro:3}]
+  },
+  {
+    e:'🎯',scenario:'关于"对的人"……',
+    t:'你更认同哪个说法？',
+    o:['不存在"对的人"，爱情是两个人共同创造的',
+       '"对的人"很重要，相似的价值观比激情重要',
+       '喜欢就在一起，合不合适相处中才慢慢知道',
+       '心动是一切的前提，没感觉什么都是假的'],
+    s:[{pa:2,se:0,in:3,si:2,lo:1,ro:2},{pa:0,se:4,in:1,si:1,lo:4,ro:1},{pa:2,se:1,in:2,si:1,lo:2,ro:2},{pa:2,se:0,in:0,si:4,lo:1,ro:4}]
+  },
+  {
+    e:'🌟',scenario:'闺蜜认真问你……',
+    t:'"恋爱对你来说是什么？"你会怎么回答？',
+    o:['是冒险，是把自己燃烧殆尽的极致体验',
+       '是归宿，是无论如何都有人接住你',
+       '是加分项，让我成为更好版本的自己',
+       '是共鸣，是被另一个人真正看见的感觉'],
+    s:[{pa:4,se:0,in:0,si:2,lo:1,ro:3},{pa:0,se:4,in:0,si:2,lo:4,ro:2},{pa:0,se:1,in:4,si:1,lo:2,ro:2},{pa:1,se:1,in:0,si:4,lo:2,ro:4}]
+  }
+];
+
+/* ═══════════════════════════════════════
+   结果类型
+═══════════════════════════════════════ */
+var Types={
+  passion:{
+    name:'烈焰玫瑰星球',icon:'🔥',
+    iconBg:'linear-gradient(135deg,#FFD6C0,#FFAECE,#FF85B3)',
+    quote:'「爱就要轰轰烈烈，宁可哭到天亮，也不要那种看不出爱没爱过的平淡」',
+    tags:[{t:'热烈主动',bg:'#FFE8F0',c:'#E8406A'},{t:'敢爱敢恨',bg:'#FFF0E0',c:'#E07830'},{t:'直觉行动派',bg:'#FFEAF5',c:'#C0458A'}],
+    desc:'你是爱情里燃烧最旺盛的那颗星 🔥 感情对你来说是一场全情投入的冒险，喜欢就去追，爱了就全给，绝不藏藏掖掖。\n\n你拥有罕见的勇气——大多数人害怕受伤而选择逃避，而你愿意为了那一秒心动押上全部。这种魄力让身边人又羡慕又佩服。',
+    matches:[{i:'🌊',n:'深海珍珠星球',d:'稳稳接住你的热情，给你一个温柔的港湾'},{i:'🌿',n:'自由行星星球',d:'保持边界，让你的热烈有了呼吸的空间'}],
+    quote2:{text:'爱是一场勇敢的冒险，你天生就擅长这件事。',from:'— 写给烈焰玫瑰星球的你'}
+  },
+  security:{
+    name:'深海珍珠星球',icon:'🌊',
+    iconBg:'linear-gradient(135deg,#D6EEFF,#C9D6FF,#B8C8FF)',
+    quote:'「我要的不多，只是有人陪我好好吃饭，好好睡觉，好好变老，就够了」',
+    tags:[{t:'渴望稳定',bg:'#E8F4FF',c:'#2E7DC0'},{t:'长情专一',bg:'#F0E8FF',c:'#7040C0'},{t:'温柔守护者',bg:'#E8FFF4',c:'#208060'}],
+    desc:'你是爱情里最温柔的守护者 💙 对你来说，爱不需要惊天动地，一日三餐、睡前的道晚安，就是最浪漫的事。\n\n你对感情非常认真，一旦付出就是全心全意，会记得对方说过的每一个细节，默默地把关心藏在日常的小事里。',
+    matches:[{i:'🔥',n:'烈焰玫瑰星球',d:'带给你新鲜感和心动，唤醒你内心的勇气'},{i:'✨',n:'星光诗人星球',d:'同频共振，两颗敏感的心相互理解温暖'}],
+    quote2:{text:'最美的爱情，是两个人把彼此的平凡，都变成了珍贵。',from:'— 写给深海珍珠星球的你'}
+  },
+  independence:{
+    name:'自由行星星球',icon:'🌿',
+    iconBg:'linear-gradient(135deg,#D6FFE8,#C0F0D0,#A8E8C0)',
+    quote:'「爱你，但我也爱我自己；在一起，但我们都保有自己完整的宇宙」',
+    tags:[{t:'边界清晰',bg:'#E0FFE8',c:'#1A8040'},{t:'独立自主',bg:'#F5FFE0',c:'#6A8020'},{t:'平等主义者',bg:'#FFFBE0',c:'#907020'}],
+    desc:'你是爱情里最清醒的那个人 🌿 你明白，再好的感情也不能让你失去自己。你把自我完整放在关系第一位，这种清醒在今天是稀有的品质。\n\n你不喜欢过度依赖，也不喜欢被束缚。你的爱是「我选择你，同时我也选择自己」。',
+    matches:[{i:'🔥',n:'烈焰玫瑰星球',d:'点燃你的热情，让你体验放开边界的勇气'},{i:'🌿',n:'另一个自由行星',d:'两个独立灵魂，不依赖但深深在乎'}],
+    quote2:{text:'最好的关系，是两棵树挨着生长，根系独立，枝叶相拥。',from:'— 写给自由行星星球的你'}
+  },
+  sensitivity:{
+    name:'星光诗人星球',icon:'✨',
+    iconBg:'linear-gradient(135deg,#F0E8FF,#FFE0F8,#FFD6F0)',
+    quote:'「我爱的从来不只是你这个人，是和你在一起时，我变成的那个更好的我」',
+    tags:[{t:'细腻敏感',bg:'#F5E8FF',c:'#8040C0'},{t:'共情力极强',bg:'#FFE8F8',c:'#C04080'},{t:'浪漫主义者',bg:'#FFF0E8',c:'#C07030'}],
+    desc:'你是爱情里最会感受的那个人 ✨ 别人觉得没什么的细节，在你眼里是满满的深情。你对爱情有极强的感知力，心动和受伤都比别人更深。\n\n你需要被真正「看见」——不是表面优秀被欣赏，而是那个藏在深处的真实自己被理解和珍视。',
+    matches:[{i:'🌊',n:'深海珍珠星球',d:'给你温柔稳定的依靠，让你的感受有个家'},{i:'✨',n:'另一颗星光星球',d:'两个浪漫的灵魂，共同编写最美的故事'}],
+    quote2:{text:'最懂你的人，不是因为你解释了多少，而是因为他看见了你沉默里的那些话。',from:'— 写给星光诗人星球的你'}
+  }
+};
+
+var HexDims=[
+  {key:'pa',label:'主动热情',color:'#FF6FA8'},
+  {key:'si',label:'感受力',  color:'#9B5DE5'},
+  {key:'ro',label:'浪漫指数',color:'#F4A261'},
+  {key:'lo',label:'专一度',  color:'#1D9E75'},
+  {key:'in',label:'独立指数',color:'#378ADD'},
+  {key:'se',label:'安全感',  color:'#D4537E'}
+];
+var dimOrder=['pa','si','ro','lo','in','se'];
+
+/* ═══════════════════════════════════════
+   状态
+═══════════════════════════════════════ */
+var curQ=0;
+var ans=new Array(10).fill(null);
+var raw={pa:0,si:0,ro:0,lo:0,in:0,se:0};
+var resultType='';
+var hexNorm={};
+
+/* ═══════════════════════════════════════
+   封面 → 测试
+═══════════════════════════════════════ */
+function goQuiz(){
+  document.getElementById('pg-cover').style.display='none';
+  document.getElementById('pg-quiz').style.display='block';
+  // 初始化进度点
+  var dots=document.getElementById('qDots'); dots.innerHTML='';
+  for(var i=0;i<Qs.length;i++){
+    var d=document.createElement('div');
+    d.className='qdot'+(i===0?' cur':'');
+    d.id='dot-'+i;
+    dots.appendChild(d);
+  }
+  renderQ();
+}
+
+/* ═══════════════════════════════════════
+   渲染题目
+═══════════════════════════════════════ */
+function renderQ(){
+  var q=Qs[curQ];
+  document.getElementById('qNum').textContent='第 '+(curQ+1)+' 题 / 共 '+Qs.length+' 题';
+  document.getElementById('pFill').style.width=(((curQ+1)/Qs.length)*100)+'%';
+
+  // 进度点
+  for(var i=0;i<Qs.length;i++){
+    var d=document.getElementById('dot-'+i);
+    if(!d) continue;
+    d.className='qdot'+(i<curQ?' done':(i===curQ?' cur':''));
+  }
+
+  // 场景
+  var sc=document.getElementById('qScenario');
+  if(q.scenario){sc.textContent='📖 '+q.scenario;sc.style.display='block'}
+  else sc.style.display='none';
+
+  document.getElementById('qEmoji').textContent=q.e;
+  document.getElementById('qTxt').textContent=q.t;
+
+  var grid=document.getElementById('qOpts'); grid.innerHTML='';
+  var L=['A','B','C','D'];
+  for(var i=0;i<q.o.length;i++){
+    (function(idx){
+      var btn=document.createElement('button');
+      btn.className='opt'+(ans[curQ]===idx?' sel':'');
+      btn.innerHTML='<span class="oltr">'+L[idx]+'</span>'+q.o[idx]
+        +'<span class="opt-check">✨</span>';
+      btn.onclick=function(){selectOpt(idx)};
+      grid.appendChild(btn);
+    })(i);
+  }
+
+  document.getElementById('btnPrev').style.visibility=curQ===0?'hidden':'visible';
+  var nb=document.getElementById('btnNext');
+  nb.textContent=curQ===Qs.length-1?'查看结果 🌸':'继续 →';
+  nb.className='btn-next'+(ans[curQ]!==null?' on':'');
+
+  var card=document.getElementById('qCard');
+  card.style.animation='none';void card.offsetWidth;card.style.animation='cardIn .4s cubic-bezier(.34,1.56,.64,1)';
+}
+
+function selectOpt(i){
+  ans[curQ]=i;
+  document.querySelectorAll('.opt').forEach(function(b,idx){
+    b.className='opt'+(idx===i?' sel':'');
+  });
+  document.getElementById('btnNext').className='btn-next on';
+}
+function prevQ(){if(curQ>0){curQ--;renderQ()}}
+function nextQ(){
+  if(ans[curQ]===null) return;
+  if(curQ<Qs.length-1){curQ++;renderQ()}
+  else showResult();
+}
+
+/* ═══════════════════════════════════════
+   计算 & 展示结果
+═══════════════════════════════════════ */
+function showResult(){
+  // 累加
+  raw={pa:0,si:0,ro:0,lo:0,in:0,se:0};
+  for(var qi=0;qi<ans.length;qi++){
+    if(ans[qi]===null) continue;
+    var s=Qs[qi].s[ans[qi]];
+    raw.pa+=s.pa;raw.si+=s.si;raw.ro+=s.ro;raw.lo+=s.lo;raw.in+=s.in;raw.se+=s.se;
+  }
+
+  // 主类型
+  var dim4={passion:raw.pa,security:raw.se,independence:raw.in,sensitivity:raw.si};
+  resultType='passion';var mx=0;
+  for(var k in dim4){if(dim4[k]>mx){mx=dim4[k];resultType=k}}
+
+  // 归一化六维（25%下限）
+  var maxR=Math.max(raw.pa,raw.si,raw.ro,raw.lo,raw.in,raw.se)||1;
+  hexNorm={};
+  for(var ki=0;ki<dimOrder.length;ki++){
+    var dk=dimOrder[ki];
+    hexNorm[dk]=Math.max(25,Math.round((raw[dk]/maxR)*100));
+  }
+
+  document.getElementById('pg-quiz').style.display='none';
+  document.getElementById('pg-result').style.display='block';
+  document.getElementById('pg-result').className='page-fade';
+  window.scrollTo(0,0);
+
+  var r=Types[resultType];
+  // 英雄
+  var ic=document.getElementById('rIcon');
+  ic.style.background=r.iconBg;ic.textContent=r.icon;
+  document.getElementById('rName').textContent=r.name;
+  document.getElementById('rQuote').textContent=r.quote;
+
+  // 星星装饰
+  var rs=document.getElementById('resStars'); rs.innerHTML='';
+  var stEmojis=['✨','💫','⭐','🌟'];
+  for(var si=0;si<8;si++){
+    var sp=document.createElement('span'); sp.className='rsstar';
+    sp.textContent=stEmojis[si%stEmojis.length];
+    sp.style.cssText='left:'+Math.random()*100+'%;top:'+Math.random()*100+'%;'
+      +'animation-duration:'+(2+Math.random()*3)+'s;animation-delay:'+(Math.random()*3)+'s;';
+    rs.appendChild(sp);
+  }
+
+  // tags
+  var tg=document.getElementById('rTags');tg.innerHTML='';
+  r.tags.forEach(function(t){
+    var s=document.createElement('span');s.className='tag';
+    s.style.cssText='background:'+t.bg+';color:'+t.c;
+    s.textContent=t.t;tg.appendChild(s);
+  });
+
+  document.getElementById('rDesc').innerHTML=r.desc.replace(/\n/g,'<br>');
+
+  // 最佳伴侣
+  var ml=document.getElementById('matchList');ml.innerHTML='';
+  r.matches.forEach(function(m){
+    ml.innerHTML+='<div class="match-item"><span class="match-icon">'+m.i+'</span>'
+      +'<div><div class="match-name">'+m.n+'</div><div class="match-desc">'+m.d+'</div></div></div>';
+  });
+
+  // 爱情名言
+  document.getElementById('lqText').textContent=r.quote2.text;
+  document.getElementById('lqFrom').textContent=r.quote2.from;
+
+  // 六边形
+  renderHex(hexNorm);
+
+  // 深度报告（IP限制）
+  fetchReport();
+}
+
+/* ═══════════════════════════════════════
+   六边形雷达图（SVG）
+═══════════════════════════════════════ */
+function renderHex(hex){
+  var svg=document.getElementById('hexChart');
+  svg.innerHTML='';
+  var cx=130,cy=130,R=88,n=6;
+
+  function vx(i,r){
+    var a=-Math.PI/2+(2*Math.PI/n)*i;
+    return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};
+  }
+  function poly(r,fill,stroke,sw,dash){
+    var pts=[];
+    for(var i=0;i<n;i++){var v=vx(i,r);pts.push(v.x+','+v.y)}
+    var p=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    p.setAttribute('points',pts.join(' '));
+    p.setAttribute('fill',fill);p.setAttribute('stroke',stroke);
+    p.setAttribute('stroke-width',sw);
+    if(dash)p.setAttribute('stroke-dasharray',dash);
+    svg.appendChild(p);return p;
+  }
+
+  // 网格（3层）
+  poly(R*1,'none','rgba(200,120,180,0.15)','1');
+  poly(R*.67,'none','rgba(200,120,180,0.12)','1','4,3');
+  poly(R*.33,'none','rgba(200,120,180,0.1)','1','3,4');
+
+  // 轴线
+  for(var i=0;i<n;i++){
+    var v=vx(i,R);
+    var ln=document.createElementNS('http://www.w3.org/2000/svg','line');
+    ln.setAttribute('x1',cx);ln.setAttribute('y1',cy);
+    ln.setAttribute('x2',v.x);ln.setAttribute('y2',v.y);
+    ln.setAttribute('stroke','rgba(200,120,180,0.18)');ln.setAttribute('stroke-width','1');
+    svg.appendChild(ln);
+  }
+
+  // 渐变填充
+  var defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+  var grad=document.createElementNS('http://www.w3.org/2000/svg','radialGradient');
+  grad.setAttribute('id','hg');grad.setAttribute('cx','50%');grad.setAttribute('cy','50%');grad.setAttribute('r','50%');
+  var s1=document.createElementNS('http://www.w3.org/2000/svg','stop');
+  s1.setAttribute('offset','0%');s1.setAttribute('stop-color','#FFB3CF');s1.setAttribute('stop-opacity','0.9');
+  var s2=document.createElementNS('http://www.w3.org/2000/svg','stop');
+  s2.setAttribute('offset','100%');s2.setAttribute('stop-color','#9B5DE5');s2.setAttribute('stop-opacity','0.65');
+  grad.appendChild(s1);grad.appendChild(s2);defs.appendChild(grad);svg.appendChild(defs);
+
+  // 数据多边形
+  var dataPts=[];
+  for(var i=0;i<n;i++){
+    var val=(hex[dimOrder[i]]||50)/100;
+    var v=vx(i,R*val);dataPts.push(v.x+','+v.y);
+  }
+  var dp=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+  dp.setAttribute('points',dataPts.join(' '));
+  dp.setAttribute('fill','url(#hg)');
+  dp.setAttribute('stroke','#FF85B3');dp.setAttribute('stroke-width','2.5');
+  dp.style.filter='drop-shadow(0 3px 8px rgba(233,64,106,0.35))';
+  svg.appendChild(dp);
+
+  // 顶点圆圈
+  for(var i=0;i<n;i++){
+    var val2=(hex[dimOrder[i]]||50)/100;
+    var v2=vx(i,R*val2);
+    var c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',v2.x);c.setAttribute('cy',v2.y);c.setAttribute('r','5');
+    c.setAttribute('fill','#fff');c.setAttribute('stroke',HexDims[i].color);c.setAttribute('stroke-width','2.5');
+    c.style.filter='drop-shadow(0 1px 4px rgba(233,64,106,0.3))';
+    svg.appendChild(c);
+  }
+
+  // 标签
+  for(var i=0;i<n;i++){
+    var lv=vx(i,R+26);
+    var dim=HexDims[i];
+    var txt=document.createElementNS('http://www.w3.org/2000/svg','text');
+    txt.setAttribute('x',lv.x);txt.setAttribute('y',lv.y);
+    txt.setAttribute('text-anchor','middle');txt.setAttribute('dominant-baseline','middle');
+    txt.setAttribute('font-size','11.5');txt.setAttribute('font-family','ZCOOL XiaoWei,serif');
+    txt.setAttribute('fill',dim.color);txt.setAttribute('font-weight','700');
+    txt.textContent=dim.label;
+    svg.appendChild(txt);
+
+    // 数值
+    var val3=(hex[dimOrder[i]]||50)/100;
+    var sv=vx(i,R*val3);
+    var stxt=document.createElementNS('http://www.w3.org/2000/svg','text');
+    var offY=val3>0.5?-13:13;
+    stxt.setAttribute('x',sv.x);stxt.setAttribute('y',sv.y+offY);
+    stxt.setAttribute('text-anchor','middle');stxt.setAttribute('dominant-baseline','middle');
+    stxt.setAttribute('font-size','10');stxt.setAttribute('fill',dim.color);
+    stxt.setAttribute('font-weight','700');stxt.setAttribute('font-family','sans-serif');
+    stxt.textContent=hex[dimOrder[i]]+'%';
+    svg.appendChild(stxt);
+  }
+
+  // 图例
+  var legend=document.getElementById('hexLegend');legend.innerHTML='';
+  for(var i=0;i<HexDims.length;i++){
+    var d=HexDims[i];
+    legend.innerHTML+='<div class="hex-item">'
+      +'<div class="hex-dot" style="background:'+d.color+'"></div>'
+      +d.label
+      +'<span class="hex-val">'+hex[dimOrder[i]]+'%</span>'
+      +'</div>';
+  }
+}
+
+/* ═══════════════════════════════════════
+   获取深度报告（IP限制）
+═══════════════════════════════════════ */
+function fetchReport(){
+  var labelMap={pa:'passion',si:'sensitivity',ro:'romance',lo:'loyalty',in:'independence',se:'security'};
+  var hexData={};
+  dimOrder.forEach(function(k){hexData[labelMap[k]]=hexNorm[k]||50});
+
+  fetch('/.netlify/functions/deep-report',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({result_type:resultType,hex:hexData})
+  })
+  .then(function(r){return r.json()})
+  .then(function(d){
+    if(d.error==='limit'){
+      // IP超限
+      document.getElementById('reportWrap').innerHTML=
+        '<div class="limit-box">'
+        +'<span class="limit-icon">🌸</span>'
+        +'<div class="limit-h">今天的缘分已经用完啦～</div>'
+        +'<div class="limit-sub">每个设备限免费使用 <strong>2次</strong><br>截图保存基础结果，明天再来测测看吧 💕<br><br>喜欢这个测试？分享给你的闺蜜一起测！</div>'
+        +'</div>';
+      return;
+    }
+    if(!d.success||!d.report){
+      document.getElementById('reportContent').innerHTML=
+        '<div class="err-box">😢 '+(d.message||'报告生成失败，请稍后重试')+'</div>';
+      return;
+    }
+    renderReport(d.report);
+  })
+  .catch(function(){
+    document.getElementById('reportContent').innerHTML=
+      '<div class="err-box">😢 网络错误，请检查网络后刷新重试</div>';
+  });
+}
+
+/* ═══════════════════════════════════════
+   渲染深度报告
+═══════════════════════════════════════ */
+function renderReport(text){
+  // 拆出「隐藏弱点」版块
+  var weakReg=/【⚡[^】]*】([\s\S]*?)(?=【[^】]+】|$)/;
+  var weakMatch=text.match(weakReg);
+  var weakText='';
+  if(weakMatch){
+    weakText=weakMatch[1].trim();
+    text=text.replace(/【⚡[^】]*】[\s\S]*?(?=【[^】]+】|$)/,'');
+  }
+
+  // 拆分各版块
+  var parts=text.split(/(【[^】]+】)/);
+  var html='<div class="report-content">';
+  var inSection=false;
+  for(var i=0;i<parts.length;i++){
+    var p=parts[i].trim();
+    if(!p) continue;
+    if(p.startsWith('【')&&p.endsWith('】')){
+      if(inSection) html+='</div></div>';
+      html+='<div class="report-section"><div class="rsec-title">'+esc(p)+'</div><div class="rsec-body">';
+      inSection=true;
+    } else {
+      if(!inSection){html+='<div class="report-section"><div class="rsec-body">';inSection=true}
+      // 处理「✦」开头的锦囊条目
+      var lines=p.split('\n');
+      var lineHtml='';
+      for(var li=0;li<lines.length;li++){
+        var ln=lines[li].trim();
+        if(!ln) continue;
+        if(ln.startsWith('✦')||ln.startsWith('·')){
+          lineHtml+='<div class="tip-item"><span class="tip-star">✦</span><span>'+esc(ln.replace(/^[✦·]\s*/,''))+'</span></div>';
+        } else {
+          lineHtml+=esc(ln)+'<br>';
+        }
+      }
+      html+=lineHtml;
+    }
+  }
+  if(inSection) html+='</div></div>';
+  html+='</div>';
+
+  document.getElementById('reportContent').innerHTML=html;
+
+  // 显示隐藏弱点
+  if(weakText){
+    document.getElementById('weakCard').style.display='block';
+    document.getElementById('weakBody').innerHTML=esc(weakText).replace(/\n/g,'<br>');
+  }
+}
+
+function esc(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ═══════════════════════════════════════
+   分享 / 重测
+═══════════════════════════════════════ */
+function doShare(){
+  // 点击时触发一波樱花粒子效果（简单实现：添加emoji雨）
+  showToast('📱 长按保存截图，发小红书让闺蜜也来测！🌸');
+}
+function doRetry(){
+  curQ=0;ans=new Array(10).fill(null);
+  raw={pa:0,si:0,ro:0,lo:0,in:0,se:0};
+  resultType='';hexNorm={};
+  document.getElementById('pg-result').style.display='none';
+  document.getElementById('weakCard').style.display='none';
+  document.getElementById('pg-cover').style.cssText='display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:40px 0';
+  window.scrollTo(0,0);
+}
+function showToast(msg){
+  var t=document.getElementById('toast');t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show')},3500);
+}
+</script>
+</body>
+</html>
